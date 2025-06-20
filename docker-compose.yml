@@ -15,6 +15,9 @@ services:
   bot-generator:
     build: bot-generator
     container_name: bot-generator
+    user: root
+    security_opt:
+      - no-new-privileges:true
     env_file: .env
     depends_on:
       - mailhog
@@ -26,6 +29,9 @@ services:
   camel-server:
     build: camel-server
     container_name: camel-server
+    user: root
+    security_opt:
+      - no-new-privileges:true
     env_file: .env
     depends_on:
       - mailhog
@@ -40,6 +46,9 @@ services:
   client-agent:
     build: client-agent
     container_name: client-agent
+    user: root
+    security_opt:
+      - no-new-privileges:true
     env_file: .env
     depends_on:
       - mailhog
