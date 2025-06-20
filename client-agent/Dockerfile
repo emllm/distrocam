@@ -12,11 +12,11 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY requirements.txt .
+COPY client-agent/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy Groovy scripts
-COPY src/ /app/src/
+COPY client-agent/src/ /app/src/
 
 # Create deployment directory
 RUN mkdir -p /app/deployment

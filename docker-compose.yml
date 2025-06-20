@@ -13,7 +13,9 @@ services:
 
   # Bot that sends test emails
   bot-generator:
-    build: bot-generator
+    build:
+      context: .
+      dockerfile: bot-generator/Dockerfile
     container_name: bot-generator
     user: root
     security_opt:
@@ -27,7 +29,9 @@ services:
 
   # Main processing service
   camel-server:
-    build: camel-server
+    build:
+      context: .
+      dockerfile: camel-server/Dockerfile
     container_name: camel-server
     user: root
     security_opt:
@@ -37,14 +41,16 @@ services:
       - mailhog
       - ollama
     volumes:
-      - config:/app/config
+      - ./config:/app/config
     networks:
       - emllm-network
     restart: unless-stopped
 
   # Client that receives and deploys apps
   client-agent:
-    build: client-agent
+    build:
+      context: .
+      dockerfile: client-agent/Dockerfile
     container_name: client-agent
     user: root
     security_opt:
@@ -53,7 +59,7 @@ services:
     depends_on:
       - mailhog
     volumes:
-      - deployment:/app/deployment
+      - ./deployment:/app/deployment
     networks:
       - emllm-network
     restart: unless-stopped
@@ -71,7 +77,9 @@ services:
 
   # Web interface
   web-client:
-    build: web-client
+    build:
+      context: .
+      dockerfile: web-client/Dockerfile
     container_name: web-client
     ports:
       - "3000:3000"

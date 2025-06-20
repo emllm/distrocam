@@ -11,15 +11,17 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY requirements.txt .
+COPY camel-server/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Create config directory
 RUN mkdir -p /app/config
 
-# Copy Groovy scripts and config
-COPY src/ /app/src/
-COPY ../config/ /app/config/
+# Copy Groovy scripts
+COPY camel-server/src/ /app/src/
+
+# Create a placeholder for config (will be mounted at runtime)
+RUN mkdir -p /app/config
 
 # Download Apache Camel Kamelets if needed
 # RUN mkdir -p /app/kamelets && \
