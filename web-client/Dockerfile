@@ -4,11 +4,11 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Install app dependencies
-COPY package*.json ./
+COPY web-client/package*.json ./
 RUN npm install
 
 # Copy app source code
-COPY . .
+COPY web-client/ .
 
 # Build the app
 RUN npm run build
