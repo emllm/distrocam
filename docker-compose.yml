@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Mail server for development
   mailhog:
@@ -13,10 +11,9 @@ services:
 
   # Bot that sends test emails
   bot-generator:
-    build:
-      context: ../services/bot-generator
+    build: bot-generator
     container_name: bot-generator
-    env_file: ../.env
+    env_file: .env
     depends_on:
       - mailhog
     networks:
@@ -25,29 +22,27 @@ services:
 
   # Main processing service
   camel-server:
-    build:
-      context: ../services/camel-server
+    build: camel-server
     container_name: camel-server
-    env_file: ../.env
+    env_file: .env
     depends_on:
       - mailhog
       - ollama
     volumes:
-      - ../config:/app/config
+      - config:/app/config
     networks:
       - emllm-network
     restart: unless-stopped
 
   # Client that receives and deploys apps
   client-agent:
-    build:
-      context: ../services/client-agent
+    build: client-agent
     container_name: client-agent
-    env_file: ../.env
+    env_file: .env
     depends_on:
       - mailhog
     volumes:
-      - ../deployment:/app/deployment
+      - deployment:/app/deployment
     networks:
       - emllm-network
     restart: unless-stopped
@@ -65,12 +60,11 @@ services:
 
   # Web interface
   web-client:
-    build:
-      context: ../web-client
+    build: web-client
     container_name: web-client
     ports:
       - "3000:3000"
-    env_file: ../.env
+    env_file: .env
     depends_on:
       - mailhog
     networks:
