@@ -10,11 +10,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY services/client-agent/requirements.txt .
+COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
 # Copy Groovy scripts
-COPY services/client-agent/src/ /app/src/
+COPY src/ /app/src/
 
 # Create deployment directory
 RUN mkdir -p /app/deployment

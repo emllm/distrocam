@@ -9,11 +9,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY services/bot-generator/requirements.txt .
+COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
 # Copy the bot script
-COPY services/bot-generator/bot.py .
+COPY bot.py .
 
 # Make the script executable
 RUN chmod +x bot.py
