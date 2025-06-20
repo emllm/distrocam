@@ -1,19 +1,18 @@
-FROM groovy:3.0-jdk11
+FROM python:3.9-slim
 
 # Set working directory
 WORKDIR /app
 
-# Install required packages with non-interactive frontend
+# Install required packages
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    python3 \
-    python3-pip \
-    && apt-get clean \
+    apt-get install -y --no-install-recommends \
+    openjdk-11-jre-headless \
+    groovy \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Create config directory
 RUN mkdir -p /app/config
